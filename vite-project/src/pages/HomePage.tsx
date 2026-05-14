@@ -1,11 +1,11 @@
-import LeapYearSection from "../components/games/LeapYear";
-import GuessNumberSection from "../components/games/GuessNumber";
-import RockPaperScissorsSection from "../components/games/RockPaperScissors";
-import CalculatorSection from "../components/games/Calculator";
-import TimeCalculatorSection from "../components/games/TimeCalculator";
-import Football from "../components/games/Football";
-import TheLargestNumber from "../components/games/TheLargestNumber";
-import Team from "../components/games/Team";
+import LeapYearSection from "../components/games/LeapYear/LeapYear";
+import GuessNumberSection from "../components/games/GuessNumber/GuessNumber";
+import RockPaperScissorsSection from "../components/games/RockPaperScissors/RockPaperScissors";
+import CalculatorSection from "../components/games/Calculator/Calculator";
+import TimeCalculatorSection from "../components/games/TimeCalculator/TimeCalculator";
+// import Football from "../components/games/Football/Football";
+// import TheLargestNumber from "../components/games/TheLargestNumber/TheLargestNumber";
+// import Team from "../components/games/Team/Team";
 
 const HomePage = () => {
   return (
@@ -22,9 +22,9 @@ const HomePage = () => {
       <RockPaperScissorsSection />
       <CalculatorSection />
       <TimeCalculatorSection />
-      <Football />
+      {/* <Football />
       <TheLargestNumber />
-      <Team />
+      <Team /> */}
     </main>
   );
 };
