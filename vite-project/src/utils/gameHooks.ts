@@ -128,3 +128,117 @@ export const useRockPaperScissors = () => {
     resetGame,
   }
 }
+
+export const useCalculator = () => {
+  const [state, setState] = useState({
+    firstValue: "",
+    secondValue: "",
+    operator: "+",
+    result: "0",
+    error: "",
+  })
+
+  const setFirstValue = (value: string) => {
+    setState(prev => ({ ...prev, firstValue: value, error: "" }))
+  }
+
+  const setSecondValue = (value: string) => {
+    setState(prev => ({ ...prev, secondValue: value, error: "" }))
+  }
+
+  const setOperator = (operator: string) => {
+    setState(prev => ({ ...prev, operator }))
+  }
+
+  const calculate = () => {
+    const first = Number(state.firstValue.trim())
+    const second = Number(state.secondValue.trim())
+
+    if (Number.isNaN(first) || Number.isNaN(second)) {
+      setState(prev => ({ ...prev, error: "Введіть два коректні числа.", result: "0" }))
+      return
+    }
+
+    if (state.operator === "/" && second === 0) {
+      setState(prev => ({ ...prev, error: "Ділення на нуль неможливе.", result: "0" }))
+      return
+    }
+
+    const result =
+      state.operator === "+"
+        ? first + second
+        : state.operator === "-"
+        ? first - second
+        : state.operator === "*"
+        ? first * second
+        : first / second
+
+    setState(prev => ({
+      ...prev,
+      result: Number.isFinite(result) ? result.toString() : "0",
+      error: "",
+    }))
+  }
+
+  const reset = () => {
+    setState({ firstValue: "", secondValue: "", operator: "+", result: "0", error: "" })
+  }
+
+  return {
+    state,
+    setFirstValue,
+    setSecondValue,
+    setOperator,
+    calculate,
+    reset,
+  }
+}
+
+const formatTime = (seconds: number) => {
+  const days = Math.floor(seconds / 86400)
+  const hours = Math.floor((seconds % 86400) / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+  const remainingSeconds = seconds % 60
+
+  const parts = []
+
+  if (days) parts.push(`${days} дн.`)
+  if (hours || days) parts.push(`${hours.toString().padStart(2, '0')} год.`)
+  if (minutes || hours || days) parts.push(`${minutes.toString().padStart(2, '0')} хв.`)
+  parts.push(`${remainingSeconds.toString().padStart(2, '0')} с.`)
+
+  return parts.join(' ')
+}
+
+export const useTimeCalculator = () => {
+  const [state, setState] = useState({
+    seconds: "",
+    message: "Введіть кількість секунд",
+  })
+
+  const setSeconds = (seconds: string) => {
+    setState(prev => ({ ...prev, seconds, message: "" }))
+  }
+
+  const calculate = () => {
+    const value = Number(state.seconds.trim())
+
+    if (!state.seconds.trim() || Number.isNaN(value) || value < 0) {
+      setState(prev => ({ ...prev, message: "Введіть коректну кількість секунд." }))
+      return
+    }
+
+    setState(prev => ({ ...prev, message: formatTime(value) }))
+  }
+
+  const reset = () => {
+    setState({ seconds: "", message: "Введіть кількість секунд та натисніть 🔍" })
+  }
+
+  return {
+    state,
+    setSeconds,
+    calculate,
+    reset,
+  }
+}
