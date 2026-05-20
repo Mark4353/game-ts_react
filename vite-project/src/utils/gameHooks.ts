@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import {
   generateRandomNumber,
   isLeapYear,
   pickComputerChoice,
   getRoundResult,
   getResultMessage,
+  FootballCursor,
 } from "../types/gameTypes";
 
 export const useGuessNumber = () => {
@@ -240,5 +241,53 @@ export const useTimeCalculator = () => {
     setSeconds,
     calculate,
     reset,
+  }
+}
+
+export const useFootball = () => {
+  const fieldRef = useRef<HTMLDivElement | null>(null)
+  const [cursor, setCursor] = useState<FootballCursor>({ x: 220, y: 130, visible: true })
+  const [started, setStarted] = useState<boolean>(false)
+
+  useEffect(() => {
+    const rect = fieldRef.current?.getBoundingClientRect()
+    if (rect) {
+      setCursor((c) => ({ ...c, x: Math.min(220, rect.width - 40), y: rect.height / 2 }))
+    }
+  }, [])
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (!started) return
+    const rect = fieldRef.current?.getBoundingClientRect()
+    if (!rect) return
+    const x = Math.max(16, Math.min(rect.width - 16, e.clientX - rect.left))
+    const y = Math.max(16, Math.min(rect.height - 16, e.clientY - rect.top))
+    setCursor({ x, y, visible: true })
+    if (fieldRef.current) {
+      fieldRef.current.style.setProperty('--cursor-x', `${x}px`)
+      fieldRef.current.style.setProperty('--cursor-y', `${y}px`)
+      fieldRef.current.style.setProperty('--cursor-opacity', '1')
+    }
+  }
+
+  const handlePointerLeave = () => setCursor((c) => ({ ...c, visible: false }))
+
+  useEffect(() => {
+    const el = fieldRef.current
+    if (el) {
+      el.style.setProperty('--cursor-x', `${cursor.x}px`)
+      el.style.setProperty('--cursor-y', `${cursor.y}px`)
+      el.style.setProperty('--cursor-opacity', cursor.visible ? '1' : '0')
+    }
+  }, [cursor])
+
+  return {
+    fieldRef,
+    cursor,
+    handlePointerMove,
+    handlePointerLeave,
+    started,
+    startGame: () => setStarted(true),
+    resetGame: () => setStarted(false),
   }
 }

@@ -3,7 +3,7 @@ import GuessNumberSection from "../components/games/GuessNumber/GuessNumber";
 import RockPaperScissorsSection from "../components/games/RockPaperScissors/RockPaperScissors";
 import CalculatorSection from "../components/games/Calculator/Calculator";
 import TimeCalculatorSection from "../components/games/TimeCalculator/TimeCalculator";
-// import Football from "../components/games/Football/Football";
+import FootballSection from "../components/games/Football/Football";
 // import TheLargestNumber from "../components/games/TheLargestNumber/TheLargestNumber";
 // import Team from "../components/games/Team/Team";
 
@@ -22,8 +22,8 @@ const HomePage = () => {
       <RockPaperScissorsSection />
       <CalculatorSection />
       <TimeCalculatorSection />
-      {/* <Football />
-      <TheLargestNumber />
+      <FootballSection />
+      {/* <TheLargestNumber />
       <Team /> */}
     </main>
   );

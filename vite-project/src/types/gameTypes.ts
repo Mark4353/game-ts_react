@@ -46,3 +46,9 @@ export const getResultMessage = (result: GameResult, playerChoice: string, compu
 
   return `${resultMessages[result]} Ви: ${playerChoice}, Комп'ютер: ${computerChoice}.`
 }
+
+export interface FootballCursor {
+  x: number
+  y: number
+  visible: boolean
+}
