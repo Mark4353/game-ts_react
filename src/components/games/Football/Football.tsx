@@ -2,7 +2,7 @@ import React from 'react'
 import './Football.css'
 import { useFootball } from '@/utils'
 
-export default function FootballSection(): JSX.Element {
+export default function FootballSection(): React.ReactElement {
 	const { fieldRef, cursor, handlePointerMove, handlePointerLeave, started, startGame, resetGame } = useFootball()
 
 	return (
