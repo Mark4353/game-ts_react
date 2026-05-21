@@ -3,7 +3,7 @@ import './Football.css'
 import { useFootball } from '@/utils'
 
 export default function FootballSection(): JSX.Element {
-	const { fieldRef, cursor, handlePointerMove, handlePointerLeave, started, startGame } = useFootball()
+	const { fieldRef, cursor, handlePointerMove, handlePointerLeave, started, startGame, resetGame } = useFootball()
 
 	return (
 		<section className="game-section football-section">
@@ -27,6 +27,10 @@ export default function FootballSection(): JSX.Element {
 					>
 						<circle cx="32" cy="32" r="30" fill="#ffffff" stroke="#000" strokeWidth="2" />
 					</svg>
+
+					{started && (
+						<button className="stop-button" onClick={resetGame}>Стоп</button>
+					)}
 
 					{!started && (
 						<div className="football-modal">
